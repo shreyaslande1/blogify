@@ -21,6 +21,10 @@ app.use(express.json()); // For JSON requests
 app.use(express.urlencoded({ extended: false })); // For HTML form data
 app.use(cookieParser())
 app.use(checkForAuthenticationCookie("token"));
+app.use((req, res, next) => {
+    res.locals.user = req.user;
+    next();
+});
 app.use(express.static(path.resolve('./public')));
 app.use("/user", userRouter);
 app.use("/blog", blogRouter);
